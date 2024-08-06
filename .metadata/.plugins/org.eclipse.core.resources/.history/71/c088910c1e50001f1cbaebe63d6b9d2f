@@ -1,0 +1,14 @@
+package search8;
+
+public i SearchTask<T> {
+    public default long startSearch() {
+        return System.currentTimeMillis();
+    }
+
+    default long endSearch2() {
+        return System.currentTimeMillis();
+    }
+
+    List<T> search(List<T> data);
+
+}

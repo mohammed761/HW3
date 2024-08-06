@@ -1,0 +1,55 @@
+package search8.string;
+
+
+import search8.SearchEngine;
+import search8.SearchTask;
+import search8.string.StringSearchUtils;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Run {
+    public static void main(String[] args) {
+        try {
+            List<String> data = Files.readAllLines(Paths.get("Hobbit.txt"));
+
+            // יצירת מופע של SearchEngine והזנת נתונים
+            SearchEngine<String> searchEngine = new SearchEngine<>();
+            searchEngine.setData(data);
+
+            // ביצוע חיפוש דינמי להדפסת כל המילים הארוכות מ-5 אותיות
+            List<String> longWords = searchEngine.executeSearch(d -> d.stream()
+                    .filter(word -> word.length() > 5)
+                    .collect(Collectors.toList()));
+            longWords.forEach(System.out::println);
+
+            // הדפסת זמן ביצוע החיפוש
+            System.out.println("Search time: " + searchEngine.getLastSearchTimeInMillis() + " ms");
+
+            // יצירת מופע של StringSearchUtils עם הערך "a" לביצוע חיפושים
+            StringSearchUtils utils = new StringSearchUtils("a");
+
+            // ביצוע חיפושים באמצעות מתודות רפרנס והדפסת התוצאות
+            List<String> containsA = utils.contains(data);
+            containsA.forEach(System.out::println);
+
+            List<String> startsWithA = utils.StartsWith(data);
+            startsWithA.forEach(System.out::println);
+
+            List<String> endsWithA = utils.endsWith(data);
+            endsWithA.forEach(System.out::println);
+
+            // הדפסת שלושת האלמנטים הראשונים באמצעות מתודת הרפרנס הסטטית
+            List<String> topThree = StringSearchUtils.topThree(data);
+            topThree.forEach(System.out::println);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+ 
+

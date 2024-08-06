@@ -1,0 +1,53 @@
+package Handson3;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class Test3 {
+
+	public static void main(String[] args) {
+        List<String> data = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("Hobbit.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+            	data.addAll(Arrays.asList(line.split("\\s+")));
+            }
+            StringSearchUtil st= new StringSearchUtil("aba");
+            boolean startsWith=data.stream().anyMatch(st.startsWith());
+            boolean endWith=data.stream().anyMatch(st.endsWith());
+            boolean contains=data.stream().anyMatch(st.contains());
+            boolean equals=data.stream().anyMatch(st.equals());
+            System.out.println("Any word starts with 'aba': " + startsWith);
+            System.out.println("Any word ends with 'aba': " + endWith);
+            System.out.println("Any word contains 'aba': " + contains);
+            System.out.println("Any word equals 'aba': " + equals);
+            
+//            List<Map.Entry<String, Integer>> wordLengthPairs = data.stream()
+//            	    .filter(word -> !word.isEmpty()) // Optional: to avoid processing empty strings
+//            	    .map(word -> new AbstractMap.SimpleEntry<>(word, word.length())) // Map each word to a pair (word, length)
+//            	    .distinct() // Optional: remove duplicate pairs if needed
+//            	    .collect(Collectors.toList()); // Collect the results into a list
+//
+//            	// Print each word and its length
+//            	wordLengthPairs.forEach(entry -> 
+//            	    System.out.println("Word: " + entry.getKey() + ", Length: " + entry.getValue())
+//            	);
+//
+//            	// Print the count of unique word-length pairs
+//            	System.out.println("Number of unique word-length pairs: " + wordLengthPairs.size());
+            
+        } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+}
+}

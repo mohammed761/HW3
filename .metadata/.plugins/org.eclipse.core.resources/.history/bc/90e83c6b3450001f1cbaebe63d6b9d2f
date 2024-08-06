@@ -1,0 +1,58 @@
+package search8.string;
+
+import search8.SearchEngine;
+import search8.string.StringSearchUtils;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class Run {
+    public static void main(String[] args) {
+        List<String> data = new ArrayList<>();
+
+        // קריאת קובץ הטקסט עם BufferedReader והפיכתו לרשימה של מחרוזות
+        try (BufferedReader reader = new BufferedReader(new FileReader("Hobbit.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                data.add(line);
+            }
+
+            // יצירת מופע של SearchEngine והזנת הנתונים לקריאה מהקובץ
+            SearchEngine<String> searchEngine = new SearchEngine<>();
+            searchEngine.setData(data);
+
+//            // ביצוע חיפוש דינמי להדפסת כל המילים הארוכות מ-5 אותיות
+//            List<String> longWords = searchEngine.executeSearch(d -> d.stream()
+//                    .filter(word -> word.length() > 5)
+//                    .collect(Collectors.toList()));
+//            longWords.forEach(System.out::println);
+//            
+            // הדפסת זמן ביצוע החיפוש
+            System.out.println("Search time: " + searchEngine.getLastSearchTimeInMillis() + " ms");
+
+            // יצירת מופע של StringSearchUtils עם הערך "a" לצורך ביצוע חיפושים
+            StringSearchUtils utils = new StringSearchUtils("a");
+
+            // ביצוע חיפושים באמצעות מתודות רפרנס והדפסת התוצאות
+            List<String> containsA = utils.contains(data);
+            containsA.forEach(System.out::println);
+
+            List<String> startsWithA = utils.startsWith(data);
+            startsWithA.forEach(System.out::println);
+
+            List<String> endsWithA = utils.endsWith(data);
+            endsWithA.forEach(System.out::println);
+
+            // הדפסת שלושת האלמנטים הראשונים באמצעות מתודת הרפרנס הסטטית
+            List<String> topThree = StringSearchUtils.topThree(data);
+            topThree.forEach(System.out::println);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
